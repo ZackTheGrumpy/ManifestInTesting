@@ -2,7 +2,6 @@ name: Sync Fork with Upstream
 
 on:
   schedule:
-    # This will run every 15 minutes
     - cron: '*/15 * * * *'
 
 jobs:
@@ -14,6 +13,9 @@ jobs:
         with:
           ref: main
 
+      - name: Check remote URL (Debug)
+        run: git remote -v
+
       - name: Add upstream remote
         run: |
           git remote get-url upstream || git remote add upstream https://github.com/xu654/Manifest.git
@@ -21,7 +23,7 @@ jobs:
       - name: Fetch upstream changes
         run: |
           for i in {1..5}; do
-            git fetch --verbose upstream --depth=1 && break || sleep $((15 * i));
+            git fetch --verbose upstream --depth=1 && break || sleep 15;
           done
 
       - name: Merge upstream changes into fork
