@@ -12,17 +12,16 @@ jobs:
       - name: Checkout the fork repository
         uses: actions/checkout@v2
         with:
-          repository: ZackTheGrumpy/ManifestInTesting
-          token: ${{ secrets.GITHUB_TOKEN }}
           ref: main
 
       - name: Add upstream remote
-        run: git remote add upstream https://github.com/xu654/Manifest.git
+        run: |
+          git remote get-url upstream || git remote add upstream https://github.com/xu654/Manifest.git
 
       - name: Fetch upstream changes
         run: |
           for i in {1..5}; do
-            git fetch --verbose upstream --depth=10 && break || sleep 15;
+            git fetch --verbose upstream --depth=1 && break || sleep 15;
           done
 
       - name: Merge upstream changes into fork
