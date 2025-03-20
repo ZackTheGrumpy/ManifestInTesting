@@ -21,7 +21,7 @@ jobs:
       - name: Fetch upstream changes
         run: |
           for i in {1..5}; do
-            git fetch --verbose upstream --depth=1 && break || sleep 15;
+            git fetch --verbose upstream --depth=1 && break || sleep $((15 * i));
           done
 
       - name: Merge upstream changes into fork
