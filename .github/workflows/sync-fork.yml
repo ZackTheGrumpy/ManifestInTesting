@@ -20,7 +20,10 @@ jobs:
         run: git remote add upstream https://github.com/xu654/Manifest.git
 
       - name: Fetch upstream changes
-        run: git fetch upstream --depth=10
+        run: |
+          for i in {1..5}; do
+            git fetch --verbose upstream --depth=10 && break || sleep 15;
+          done
 
       - name: Merge upstream changes into fork
         run: git merge upstream/main --allow-unrelated-histories
